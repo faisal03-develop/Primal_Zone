@@ -1,9 +1,17 @@
 @import "tailwindcss";
 
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --mainpink:#C92D78;
+  --mainpurple:#6122B3;
+  --yt-red: #ff0000;
+  
 }
+
+
 
 @theme inline {
   --color-background: var(--background);
@@ -20,7 +28,23 @@
 }
 
 body {
-  background: var(--background);
+  background: black;
+  background-image: url('/images/body_bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Helvetica Neue';
+}
+
+/* Shine animation for gradient border */
+@keyframes shine {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-shine {
+  animation: shine var(--duration, 14s) linear infinite;
 }

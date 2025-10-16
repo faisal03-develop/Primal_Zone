@@ -1,0 +1,56 @@
+.processContainer {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 40px;
+}
+
+.processSvg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.getStartedButton {
+  /* Smoothly scale down for small screens */
+  width: clamp(200px, 96vw, 638px);
+  max-width: 638px;
+margin-left: 10px;
+margin-right: 10px;
+  padding: clamp(0.4rem, 1.4vw, 0.9rem) clamp(0.9rem, 1.9vw, 1.0rem);
+  font-size: clamp(0.875rem, 1.2vw, 1rem);
+  background: linear-gradient(to right, var(--mainpurple), var(--mainpink));
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+  box-shadow: 0px 4px 14.5px 4px rgba(255, 255, 255, 0.29) inset;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6.4px);
+  min-height: 70px;
+}
+
+.getStartedButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.getStartedButton:active {
+  transform: translateY(1px);
+}
+
+/* ✅ Maintain 638px width for screens >= 660px */
+@media (min-width: 660px) {
+  .getStartedButton {
+    width: 638px;
+  }
+}
