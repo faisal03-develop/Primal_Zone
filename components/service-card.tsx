@@ -130,14 +130,30 @@ export default function HormoneResetCard({
     
     <div
   className={cn(
-    "relative rounded-2xl text-white p-3 md:p-4 overflow-hidden min-h-full w-full transition-all duration-500",
+    "relative rounded-2xl text-white p-3 md:p-4 overflow-hidden min-h-full w-full transition-all duration-1000",
     "bg-black border-2 border-gray-700 md:border-0", // mobile background & border
-    "md:bg-[url('/images/service_bg.png')] md:bg-auto md:bg-center md:bg-no-repeat" // desktop image
+    // Reverted to original background properties
+    "md:bg-[url('/images/service_bg.png')] md:bg-auto md:bg-center md:bg-no-repeat"
   )}
   style={{
     height: "100%",
   }}
 >
+
+        {/* Black overlay that reveals when in view */}
+        <div 
+          className={cn(
+            "absolute inset-0 bg-black transition-all duration-1000 z-0 rounded-2xl",
+            isInView && showBackground ? "opacity-0" : "opacity-100",
+            "md:block hidden" // Only show this effect on desktop
+          )}
+          style={{
+            // Restored original margin
+            margin: "4px", 
+            width: "calc(100% - 8px)",
+            height: "calc(100% - 8px)",
+          }}
+        />
 
         {/* Content overlay */}
         <div className="relative z-10">

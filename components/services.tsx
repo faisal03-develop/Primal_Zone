@@ -106,18 +106,22 @@ const Services = () => {
     }
   ]
 
-  // Animation variants
+  // Optimized animation variants with smaller distances and better easing
   const fadeInLeft: Variants = {
     hidden: { 
       opacity: 0, 
-      x: -80 
+      x: -40, // Reduced from -80
+      transition: { 
+        duration: 0.6, // Reduced from 0.8
+        ease: "easeOut" // Simpler easing
+      }
     },
     visible: { 
       opacity: 1, 
       x: 0,
       transition: { 
-        duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94]
+        duration: 0.6, 
+        ease: "easeOut"
       }
     }
   }
@@ -125,14 +129,18 @@ const Services = () => {
   const fadeInBottom: Variants = {
     hidden: { 
       opacity: 0, 
-      y: 60 
+      y: 30, // Reduced from 60
+      transition: { 
+        duration: 0.6, 
+        ease: "easeOut"
+      }
     },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: { 
-        duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94]
+        duration: 0.6, 
+        ease: "easeOut"
       }
     }
   }
@@ -140,14 +148,18 @@ const Services = () => {
   const fadeInTop: Variants = {
     hidden: { 
       opacity: 0, 
-      y: -60 
+      y: -30, // Reduced from -60
+      transition: { 
+        duration: 0.6, 
+        ease: "easeOut"
+      }
     },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: { 
-        duration: 0.8, 
-        ease: [0.25, 0.46, 0.45, 0.94]
+        duration: 0.6, 
+        ease: "easeOut"
       }
     }
   }
@@ -157,25 +169,17 @@ const Services = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.15, // Reduced from 0.2
         delayChildren: 0.1
       }
     }
   }
 
-  // Refs for scroll detection
-  const headingRef = useRef(null)
-  const containerRef = useRef(null)
-  
-  const headingInView = useInView(headingRef, { 
+  // Single ref for the entire section to reduce observers
+  const sectionRef = useRef(null)
+  const sectionInView = useInView(sectionRef, { 
     once: true, 
-    margin: "-50px 0px -50px 0px",
-    amount: 0.3
-  })
-  
-  const containerInView = useInView(containerRef, { 
-    once: true, 
-    margin: "-50px 0px -50px 0px",
+    margin: "-100px 0px -100px 0px", // Increased margin for earlier trigger
     amount: 0.1
   })
 
@@ -183,7 +187,7 @@ const Services = () => {
   const getCardAnimation = (index: number): Variants => {
     switch(index) {
       case 0: return fadeInLeft
-      case 1: return fadeInBottom  // Changed from fadeInRight to fadeInBottom
+      case 1: return fadeInBottom
       case 2: return fadeInBottom
       case 3: return fadeInTop
       default: return fadeInLeft
@@ -191,13 +195,12 @@ const Services = () => {
   }
 
   return (
-    <div id="service" className='w-full max-w-[1440px] mx-auto px-4'>
-      {/* Heading with animation */}
+    <div id="service" className='w-full max-w-[1440px] mx-auto px-4' ref={sectionRef}>
+      {/* Heading with animation - simplified structure */}
       <motion.div 
-        ref={headingRef}
         className='mt-8 mb-4 text-left w-full'
         initial="hidden"
-        animate={headingInView ? "visible" : "hidden"}
+        animate={sectionInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
         <motion.h2 
@@ -209,28 +212,28 @@ const Services = () => {
 
         <motion.p 
           className='text-white font-light text-lg opacity-90'
-          variants={fadeInBottom}  // Changed from fadeInRight to fadeInBottom
+          variants={fadeInBottom}
         >
           Our treatments are tailored to meet individual health needs. We prioritize safety, and if our health practitioners determine that you are ineligible to join the program, a full refund will be issued.
         </motion.p>
       </motion.div>
 
-      {/* Cards container with staggered animations */}
+      {/* Cards container with optimized animations */}
       <motion.div 
-        ref={containerRef}
         className='flex flex-col w-full gap-4 max-w-[1200px] mx-auto'
         initial="hidden"
-        animate={containerInView ? "visible" : "hidden"}
+        animate={sectionInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
         {serviceData.map((service, index) => (
           <motion.div
             key={service.title}
             variants={getCardAnimation(index)}
-            className="w-full transition-transform duration-300 my-3"
+            className="w-full my-3"
             style={{ 
               width: '100%',
-              maxWidth: '1200px'
+              maxWidth: '1200px',
+              willChange: 'transform, opacity' // Hint for browser optimization
             }}
           >
             <ServiceCard {...service} />

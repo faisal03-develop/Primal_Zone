@@ -72,70 +72,82 @@ function InfoCard({ icon, lines, variant, className }: CardProps) {
 }
 
 export function SymptomsSolutions() {
-  const containerRef = useRef(null)
-  const containerInView = useInView(containerRef, { 
+  const sectionRef = useRef(null)
+  const sectionInView = useInView(sectionRef, { 
     once: true, 
-    margin: "-50px 0px -50px 0px",
+    margin: "-100px 0px -100px 0px",
     amount: 0.1
   })
 
-  // Animation variants
+  // Optimized animation variants
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.1, // Reduced from 0.15
         delayChildren: 0.1
       }
     }
   }
 
   const columnVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { 
+      opacity: 0, 
+      y: 20, // Reduced from 30
+    },
     visible: {
-      opacity: 1,
+      opacity: 1, 
       y: 0,
       transition: {
-        duration: 0.7,
-        ease: [0.25, 0.46, 0.45, 0.94]
+        duration: 0.5, // Reduced from 0.7
+        ease: "easeOut" // Simplified easing
       }
     }
   }
 
   const cardVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.9 },
+    hidden: { 
+      opacity: 0, 
+      scale: 0.95, // Reduced from 0.9
+    },
     visible: {
-      opacity: 1,
+      opacity: 1, 
       scale: 1,
       transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94]
+        duration: 0.4, // Reduced from 0.6
+        ease: "easeOut"
       }
     }
   }
 
   const headingVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { 
+      opacity: 0, 
+      y: 20, // Reduced from 30
+    },
     visible: {
-      opacity: 1,
+      opacity: 1, 
       y: 0,
       transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
+        duration: 0.6, // Reduced from 0.8
+        ease: "easeOut"
       }
     }
   }
 
   const buttonVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { 
+      opacity: 0, 
+      y: 15, // Reduced from 20
+    },
     visible: {
-      opacity: 1,
+      opacity: 1, 
       y: 0,
       transition: {
-        duration: 0.7,
-        ease: [0.25, 0.46, 0.45, 0.94],
-        delay: 0.8
+        duration: 0.5, // Reduced from 0.7
+        ease: "easeOut",
+        delay: 0.6 // Reduced from 0.8
       }
     }
   }
@@ -204,7 +216,7 @@ export function SymptomsSolutions() {
   ]
 
   return (
-    <section className="relative isolate overflow-hidden">
+    <section className="relative isolate overflow-hidden" ref={sectionRef}>
       {/* Background */}
       <div
         aria-hidden="true"
@@ -248,7 +260,7 @@ export function SymptomsSolutions() {
         <motion.header 
           className="mb-10 md:mb-14"
           initial="hidden"
-          animate={containerInView ? "visible" : "hidden"}
+          animate={sectionInView ? "visible" : "hidden"}
           variants={headingVariants}
         >
           <h2 className="text-pretty text-center text-3xl font-semibold md:text-5xl">
@@ -257,15 +269,14 @@ export function SymptomsSolutions() {
           </h2>
         </motion.header>
 
-        {/* Responsive 4-column grid with animations */}
+        {/* Responsive 4-column grid with optimized animations */}
         <motion.div
-          ref={containerRef}
           className="
             grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 
             gap-6 sm:gap-8 justify-items-center
           "
           initial="hidden"
-          animate={containerInView ? "visible" : "hidden"}
+          animate={sectionInView ? "visible" : "hidden"}
           variants={containerVariants}
         >
           {[col1, col2, col3, col4].map((col, i) => (
@@ -275,11 +286,13 @@ export function SymptomsSolutions() {
               className={`flex flex-col gap-6 w-full sm:w-auto items-center ${
                 i % 2 !== 0 ? "pt-6 sm:pt-8" : ""
               }`}
+              style={{ willChange: 'transform, opacity' }}
             >
               {col.map((c, j) => (
                 <motion.div
                   key={j}
                   variants={cardVariants}
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   <InfoCard {...c} />
                 </motion.div>
@@ -289,12 +302,13 @@ export function SymptomsSolutions() {
         </motion.div>
       </div>
 
-      {/* Button with animation */}
+      {/* Button with optimized animation */}
       <motion.div 
         className="flex justify-center"
         initial="hidden"
-        animate={containerInView ? "visible" : "hidden"}
+        animate={sectionInView ? "visible" : "hidden"}
         variants={buttonVariants}
+        style={{ willChange: 'transform, opacity' }}
       >
         <button type="button" className={styles.getStartedButton}>
           Get Started
