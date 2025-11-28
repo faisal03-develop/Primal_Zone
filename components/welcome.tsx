@@ -30,7 +30,7 @@ const Welcome = () => {
     <>
       {/* Responsive layout: image on top on mobile, side-by-side on md+ */}
       <div
-        className="w-full flex flex-col md:flex-row items-center md:items-start md:gap-0"
+        className="w-full flex flex-col justify-center md:flex-row md:items-start md:gap-0"
         id="welcome"
       >
         {/* TEXT AREA */}
